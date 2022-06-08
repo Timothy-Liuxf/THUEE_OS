@@ -24,7 +24,7 @@ class bank : private Judger // Use inheritance for EBO in case Judger may be emp
 {
 private:
     using timer_t                  = timer<std::chrono::milliseconds>;
-    static constexpr int time_zoom = 100;
+    static constexpr int time_zoom = 200;
 
 public:
     bank(int nteller, const std::vector<std::unique_ptr<customer>>& customers)
