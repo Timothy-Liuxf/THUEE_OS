@@ -264,13 +264,26 @@ cxx11_make_unique(Args... args)
 }
 
 int
-main()
+main(int argc, char* argv[])
 {
     std::vector<std::unique_ptr<customer>> customers;
     std::string                            linebuf;
     int                                    nline   = 0;
-    constexpr int                          nteller = 5;
+    int                                    nteller = 3;
     std::istringstream                     sin;
+
+    if (argc > 1) {
+        try {
+            int tmp = std::stoi(std::string(argv[1]));
+            if (tmp > 0) {
+                nteller = tmp;
+            }
+        } catch (...) {
+        }
+    }
+
+    std::cout << "Number of teller: " << nteller << std::endl;
+
     while (std::getline(std::cin, linebuf)) {
         if (!std::cin) {
             break;
