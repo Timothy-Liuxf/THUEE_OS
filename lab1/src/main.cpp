@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cmath>
 #include <iomanip>
 #include <iostream>
 #include <list>
@@ -146,10 +147,17 @@ public:
                         std::cerr << "[ERROR] [Customer: " << customer_idx << "] hasn't started!\n";
                     }
                     if (teller_end_time[teller_idx] != time) {
-                        if (!display) return false;
-                        result = false;
-                        std::cerr << "[ERROR] [Teller: " << teller_idx
-                                  << "] didn't serve correct time as [Customer: " << customer_idx << "] expected!\n";
+                        if (std::abs(teller_end_time[teller_idx] - time) <= 2) {
+                            std::cerr << "[WARNING] [Teller: " << teller_idx
+                                      << "] didn't serve the time as [Customer: " << customer_idx
+                                      << "] expected exactly!\n";
+                        } else {
+                            if (!display) return false;
+                            result = false;
+                            std::cerr << "[ERROR] [Teller: " << teller_idx
+                                      << "] didn't serve correct time as [Customer: " << customer_idx
+                                      << "] expected!\n";
+                        }
                     }
                     customer_end_time[customer_idx] = time;
                 }
