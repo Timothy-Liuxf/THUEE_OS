@@ -10,6 +10,7 @@
 #include <mutex>
 #include <queue>
 #include <string>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -18,14 +19,16 @@
 #include "semaphore.hpp"
 #include "timer.hpp"
 
-class bank
+template <typename Judger>
+class bank : private Judger
 {
 private:
     using timer_t                  = timer<std::chrono::milliseconds>;
     static constexpr int time_zoom = 100;
 
 public:
-    bank(int nteller, const std::vector<std::unique_ptr<customer>>& customers) : _customer_sem(0u)
+    bank(int nteller, const std::vector<std::unique_ptr<customer>>& customers)
+        : Judger(nteller, customers), _customer_sem(0u)
     {
         std::vector<raii_thread> customer_thrds;
         customer_thrds.reserve(customer_thrds.size());
@@ -40,6 +43,12 @@ public:
 
         for (auto& thrd : customer_thrds) {
             thrd.join();
+        }
+
+        if (Judger::judge()) {
+            std::cout << "Test passed!" << std::endl;
+        } else {
+            std::cout << "Test failed!" << std::endl;
         }
     }
 
@@ -57,18 +66,17 @@ private:
         {
             std::unique_lock<std::mutex> lock(_custumer_queue_mtx);
             _customer_queue.emplace(&self_customer);
+            Judger::enter_bank(self_customer.get_idx(), self_customer.get_enter_time());
             _customer_sem.post(); // V
         }
-        std::printf("[Customer: %d] entered the bank at %d.\n", self_customer.get_idx(),
-                    self_customer.get_enter_time()); // Use std::printf instead of std::cout because it's thread-safe
 
         // Wait for server end
 
         self_customer.wait_sem();
 
-        // Quit bank
+        // Leave bank
 
-        std::printf("[Customer: %d] left the bank.\n", self_customer.get_idx());
+        Judger::leave_bank(self_customer.get_idx(), _get_current_time());
     }
 
     void
@@ -89,13 +97,19 @@ private:
                 assert(servee != nullptr);
                 _customer_queue.pop();
             }
-            std::printf("[Teller: %d] started to serve [customer: %d] at time: %d\n", teller_idx, servee->get_idx(),
-                        static_cast<int>(std::round(static_cast<double>(_timer.get_time()) / time_zoom)));
+            Judger::start_serve(teller_idx, servee->get_idx(), _get_current_time());
+
             timer_t::sleep(servee->get_serv_time() * time_zoom);
+
+            Judger::end_serve(teller_idx, servee->get_idx(), _get_current_time());
             servee->post_sem();
-            std::printf("[Teller: %d] end serving [customer: %d] at time: %d\n", teller_idx, servee->get_idx(),
-                        static_cast<int>(std::round(static_cast<double>(_timer.get_time()) / time_zoom)));
         }
+    }
+
+    int
+    _get_current_time()
+    {
+        return static_cast<int>(std::round(static_cast<double>(_timer.get_time()) / time_zoom));
     }
 
     semaphore             _customer_sem;

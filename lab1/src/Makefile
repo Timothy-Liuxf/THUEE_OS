@@ -15,6 +15,7 @@ OBJS = $(patsubst %.cpp,$(BIN_DIR)/%.o, $(SRCS))
 DEPS = $(patsubst %.cpp,$(DEPS_DIR)/%.d, $(SRCS))
 TARGET = $(TARGET_DIR)/main
 
+.PHONY: all
 all: $(TARGET)
 
 $(TARGET): $(OBJS) | $(TARGET_DIR)
