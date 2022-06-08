@@ -20,7 +20,7 @@
 #include "timer.hpp"
 
 template <typename Judger>
-class bank : private Judger
+class bank : private Judger // Use inheritance for EBO in case Judger may be empty
 {
 private:
     using timer_t                  = timer<std::chrono::milliseconds>;
@@ -63,10 +63,10 @@ private:
 
         // Enter bank
 
+        Judger::enter_bank(self_customer.get_idx(), self_customer.get_enter_time());
         {
             std::unique_lock<std::mutex> lock(_custumer_queue_mtx);
             _customer_queue.emplace(&self_customer);
-            Judger::enter_bank(self_customer.get_idx(), self_customer.get_enter_time());
             _customer_sem.post(); // V
         }
 
