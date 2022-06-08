@@ -173,9 +173,14 @@ public:
                     std::cerr << "[ERROR] Unknown customer: " << customer_idx << "\n";
                 } else {
                     if (time != customer_data->second.first) {
-                        if (!display) return false;
-                        result = false;
-                        std::cerr << "[ERROR] [Customer: " << customer_idx << "] enter time is incorrect!\n";
+                        if (std::abs(time - customer_data->second.first) <= 2) {
+                            std::cerr << "[WARNING] [Customer: " << customer_idx
+                                      << "] enter time isn't exactly the time expected!\n";
+                        } else {
+                            if (!display) return false;
+                            result = false;
+                            std::cerr << "[ERROR] [Customer: " << customer_idx << "] enter time is incorrect!\n";
+                        }
                     }
                     customer_enter_time[customer_idx] = time;
                 }
@@ -197,9 +202,14 @@ public:
                         std::cerr << "[ERROR] [Customer: " << customer_idx << "] left bank before ending\n";
                     }
                     if (time != itr->second) {
-                        if (!display) return false;
-                        result = false;
-                        std::cerr << "[ERROR] [Customer: " << customer_idx << "] left bank not just after ending\n";
+                        if (std::abs(time - itr->second) <= 2) {
+                            std::cerr << "[WARNING] [Customer: " << customer_idx
+                                      << "] left bank not exactly at the same time as ending\n";
+                        } else {
+                            if (!display) return false;
+                            result = false;
+                            std::cerr << "[ERROR] [Customer: " << customer_idx << "] left bank not just after ending\n";
+                        }
                     }
                     customer_leave_time[customer_idx] = time;
                 }
