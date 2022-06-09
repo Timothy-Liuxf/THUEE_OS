@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
 #ifndef BANK_HPP
 #define BANK_HPP
 
@@ -52,7 +61,7 @@ public:
         }
     }
 
-    bank(const bank&) = delete;
+    bank(const bank&)            = delete;
     bank& operator=(const bank&) = delete;
 
 private:

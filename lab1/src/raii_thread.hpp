@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
 #ifndef RAII_THREAD_HPP
 #define RAII_THREAD_HPP
 
@@ -7,10 +16,10 @@
 class raii_thread
 {
 public:
-    raii_thread() noexcept              = default;
-    raii_thread(raii_thread&&) noexcept = default;
-    raii_thread(const raii_thread&)     = delete;
-    raii_thread& operator=(raii_thread&&) noexcept = default;
+    raii_thread() noexcept                              = default;
+    raii_thread(raii_thread&&) noexcept                 = default;
+    raii_thread(const raii_thread&)                     = delete;
+    raii_thread& operator=(raii_thread&&) noexcept      = default;
     raii_thread& operator=(const raii_thread&) noexcept = delete;
 
     template <typename Function, typename... Args>

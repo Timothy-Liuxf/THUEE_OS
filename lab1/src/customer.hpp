@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
 #ifndef CUSTOMER_HPP
 #define CUSTOMER_HPP
 
@@ -16,7 +25,7 @@ public:
             throw std::invalid_argument("In constructor of customer: serv_time and enter_time should be non-negative!");
         }
     }
-    customer(const customer&) = delete;
+    customer(const customer&)            = delete;
     customer& operator=(const customer&) = delete;
 
     void

@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
@@ -13,7 +22,7 @@ public:
 
     timer() : _start_time(_raw_time()) {}
 
-    timer(const timer&) = delete;
+    timer(const timer&)            = delete;
     timer& operator=(const timer&) = delete;
 
     time_t

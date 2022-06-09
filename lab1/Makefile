@@ -1,3 +1,13 @@
+################################################################################
+#
+#  This file is part of the THUEE_OS project.
+#
+#  Copyright (C) 2022 Timothy-LiuXuefeng
+#
+#  MIT License
+#
+################################################################################
+
 .PHONY: build debug run test retest clean
 
 NTELLER ?= 3

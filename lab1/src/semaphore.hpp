@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
 #ifndef SEMAPHORE_HPP
 #define SEMAPHORE_HPP
 
@@ -14,7 +23,7 @@ public:
         }
     }
 
-    semaphore(const semaphore&) = delete;
+    semaphore(const semaphore&)            = delete;
     semaphore& operator=(const semaphore&) = delete;
 
     void
