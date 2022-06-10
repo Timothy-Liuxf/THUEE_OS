@@ -1,4 +1,6 @@
-﻿namespace MemoryManager
+﻿using Utils;
+
+namespace MemoryManager
 {
     public abstract partial class MemoryManager : IMemoryManager
     {
@@ -40,24 +42,25 @@
             bool isFirstBlock = IsFirstBlock(memoryBlock.Memory, memoryBlock.Size);
             bool isLastBlock = IsLastBlock(memoryBlock.Memory, memoryBlock.Size);
 
-            for (var freeBlockNode = freeBlocks.First; freeBlockNode is not null; freeBlockNode = freeBlockNode.Next)
+            var afterBlockNode = freeBlocks.LowerBound(memoryBlock);
+            LinkedListNode<MemoryBlock>? beforeBlockNode = null;
+            if (afterBlockNode is not null)
             {
-                var freeBlock = freeBlockNode.Value;
-                if (!isFirstBlock && freeBlock.Memory + (nuint)freeBlock.Size == memory)
+                if (!isLastBlock && memory + (nuint)size == afterBlockNode.Value.Memory)
                 {
-                    predecessor = freeBlockNode;
-                    if (successor is not null)
-                    {
-                        break;
-                    }
+                    successor = afterBlockNode;
                 }
-                if (!isLastBlock && memory + (nuint)size == freeBlock.Memory)
+                beforeBlockNode = afterBlockNode.Previous;
+            }
+            else
+            {
+                beforeBlockNode = freeBlocks.Last;
+            }
+            if (beforeBlockNode is not null)
+            {
+                if (!isFirstBlock && beforeBlockNode.Value.Memory + (nuint)beforeBlockNode.Value.Size == memory)
                 {
-                    successor = freeBlockNode;
-                    if (predecessor is not null)
-                    {
-                        break;
-                    }
+                    predecessor = beforeBlockNode;
                 }
             }
 
@@ -84,7 +87,7 @@
                 }
                 memoryBlock = new MemoryBlock(startAddress, size);
             }
-            freeBlocks.AddLast(memoryBlock);
+            freeBlocks.Add(memoryBlock);
         }
 
         public LinkedList<MemoryBlockInfo> GetFreeMemories()
@@ -110,21 +113,24 @@
 
         public MemoryManager(nuint memory, int size)
         {
-            if (size <= 0)
+            if (size < 0)
             {
-                throw new ArgumentException("The size of memory must be positive!");
+                throw new ArgumentException("The size of memory must be non-negative!");
             }
             if (memory > 0 && nuint.MaxValue - memory + 1 < (nuint)size)
             {
                 throw new ArgumentException("Memory address out of bound!");
             }
-            freeBlocks.AddLast(new MemoryBlock(memory, size));
+            if (size != 0)
+            {
+                freeBlocks.Add(new MemoryBlock(memory, size));
+            }
             startAddress = memory;
             memorySize = size;
         }
 
-        protected readonly LinkedList<MemoryBlock> freeBlocks = new LinkedList<MemoryBlock>();
-        private readonly SortedList<nuint, int> allocatedBlocks = new SortedList<nuint, int>();
+        protected readonly SortedLinkedList<MemoryBlock> freeBlocks = new SortedLinkedList<MemoryBlock>(new MemoryBlockComparer());
+        private readonly Dictionary<nuint, int> allocatedBlocks = new Dictionary<nuint, int>();
         private readonly nuint startAddress;
         private readonly int memorySize;
     }

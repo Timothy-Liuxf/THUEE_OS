@@ -29,6 +29,7 @@
                     else
                     {
                         itr.ValueRef = new MemoryBlock(itr.Value.Memory + (nuint)size, itr.Value.Size - size);
+                        lastAllocatePosition = itr;
                     }
                     return ans;
                 }
@@ -36,7 +37,7 @@
                 itr = itr.Next ?? freeBlocks.First
                     ?? throw new Exception("This code shouldn't be reachable.");    // lastAllocatePosition Means freeBlocks isn't empty
 
-            } while (ReferenceEquals(itr, lastAllocatePosition));
+            } while (!ReferenceEquals(itr, lastAllocatePosition));
 
             return null;
         }
@@ -49,6 +50,7 @@
             {
                 nuint startAddress = memoryBlock.Memory;
                 int size = memoryBlock.Size;
+                bool updateLastPos = false;
 
                 if (predecessor is not null)
                 {
@@ -57,8 +59,7 @@
 
                     if (ReferenceEquals(predecessor, lastAllocatePosition))
                     {
-                        lastAllocatePosition = freeBlocks.Count == 1 ? null :
-                            lastAllocatePosition.Next ?? freeBlocks.First;
+                        updateLastPos = true;
                     }
 
                     freeBlocks.Remove(predecessor);
@@ -70,19 +71,25 @@
 
                     if (ReferenceEquals(successor, lastAllocatePosition))
                     {
-                        lastAllocatePosition = freeBlocks.Count == 1 ? null :
-                            lastAllocatePosition.Next ?? freeBlocks.First;
+                        updateLastPos = true;
                     }
 
                     freeBlocks.Remove(successor);
                 }
 
-                freeBlocks.AddLast(new MemoryBlock(startAddress, size));
-                lastAllocatePosition = lastAllocatePosition ?? freeBlocks.First;
+                if (updateLastPos)
+                {
+                    lastAllocatePosition = freeBlocks.AddAndGetNode(new MemoryBlock(startAddress, size));
+                }
+                else
+                {
+                    freeBlocks.Add(new MemoryBlock(startAddress, size));
+                }
             }
             else
             {
-                freeBlocks.AddLast(memoryBlock);
+                freeBlocks.Add(memoryBlock);
+                lastAllocatePosition = lastAllocatePosition ?? freeBlocks.First;
             }
         }
 
