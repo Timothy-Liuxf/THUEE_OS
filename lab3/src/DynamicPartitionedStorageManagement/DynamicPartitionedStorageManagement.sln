@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoryManager", "MemoryManager\MemoryManager.csproj", "{F25E0FC6-9237-4279-B3C2-F7D40F841C31}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GUIEntrance", "GUIEntrance\GUIEntrance.csproj", "{BC79494D-4F48-4FDC-A6C0-1654B481202C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F25E0FC6-9237-4279-B3C2-F7D40F841C31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F25E0FC6-9237-4279-B3C2-F7D40F841C31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F25E0FC6-9237-4279-B3C2-F7D40F841C31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC79494D-4F48-4FDC-A6C0-1654B481202C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC79494D-4F48-4FDC-A6C0-1654B481202C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC79494D-4F48-4FDC-A6C0-1654B481202C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC79494D-4F48-4FDC-A6C0-1654B481202C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

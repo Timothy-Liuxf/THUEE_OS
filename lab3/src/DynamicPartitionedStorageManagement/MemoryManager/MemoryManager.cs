@@ -100,15 +100,25 @@ namespace MemoryManager
             return memoryInfoList;
         }
 
+        public LinkedList<MemoryBlockInfo> GetAllocatedMemories()
+        {
+            var memoryInfoList = new LinkedList<MemoryBlockInfo>();
+            foreach (var memoryBlock in allocatedBlocks)
+            {
+                memoryInfoList.AddLast(new MemoryBlockInfo(memoryBlock.Key, memoryBlock.Value));
+            }
+            return memoryInfoList;
+        }
+
         private bool IsFirstBlock(nuint memory, int size)
         {
-            return size > 0 && size <= memorySize && memory == startAddress;
+            return size > 0 && size <= MemorySize && memory == StartAddress;
         }
 
         private bool IsLastBlock(nuint memory, int size)
         {
-            return size > 0 && size <= memorySize
-                && memory >= startAddress && startAddress + (nuint)memorySize == memory + (nuint)size;
+            return size > 0 && size <= MemorySize
+                && memory >= StartAddress && StartAddress + (nuint)MemorySize == memory + (nuint)size;
         }
 
         public MemoryManager(nuint memory, int size)
@@ -125,13 +135,13 @@ namespace MemoryManager
             {
                 freeBlocks.Add(new MemoryBlock(memory, size));
             }
-            startAddress = memory;
-            memorySize = size;
+            StartAddress = memory;
+            MemorySize = size;
         }
 
         protected readonly SortedLinkedList<MemoryBlock> freeBlocks = new SortedLinkedList<MemoryBlock>(new MemoryBlockComparer());
-        private readonly Dictionary<nuint, int> allocatedBlocks = new Dictionary<nuint, int>();
-        private readonly nuint startAddress;
-        private readonly int memorySize;
+        private readonly SortedDictionary<nuint, int> allocatedBlocks = new SortedDictionary<nuint, int>();
+        public nuint StartAddress { get; init; }
+        public int MemorySize { get; init; }
     }
 }
