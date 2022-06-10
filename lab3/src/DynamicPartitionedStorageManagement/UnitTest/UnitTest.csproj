@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MemoryPool\MemoryManager.csproj" />
+    <ProjectReference Include="..\MemoryManager\MemoryManager.csproj" />
   </ItemGroup>
 
 </Project>
