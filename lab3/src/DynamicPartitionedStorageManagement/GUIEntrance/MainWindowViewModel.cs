@@ -51,7 +51,21 @@ namespace GUIEntrance
         public ICommand AllocMemory { get; init; }
         public ICommand FreeMemory { get; init; }
 
-        private MemoryManager.MemoryManager memoryManager;
+        public MemoryManager.MemoryManager? MemoryManager
+        {
+            get => memoryManager;
+            set
+            {
+                if (value is null)
+                {
+                    return;
+                }
+                memoryManager = value;
+                LogInfo = String.Format($"Successfully created memory manager!\n- Start address: {value.StartAddress}\n- Size: {value.MemorySize}");
+                RePaintMemoryDisplayer();
+            }
+        }
+        private MemoryManager.MemoryManager? memoryManager = null;
 
         //public double MemoryDiaplayerWidth { get; set; }
         //public double MemoryDiaplayerHeight { get; set; }
@@ -60,16 +74,23 @@ namespace GUIEntrance
         private readonly Brush rectangleBorderBrush = new SolidColorBrush(Color.FromRgb(0, 0, 0));
         private const double rectangleBorderThickness = 1.0;
         private readonly Brush displayerBorderBrush = new SolidColorBrush(Color.FromRgb(0, 0, 200));
+        public double ActHeight { get; set; }
         public void RePaintMemoryDisplayer()
         {
-            nuint startAddress = memoryManager.StartAddress;
-            int memorySize = memoryManager.MemorySize;
+            if (MemoryManager is null)
+            {
+                return;
+            }
+
+            nuint startAddress = MemoryManager.StartAddress;
+            int memorySize = MemoryManager.MemorySize;
 
             if (memorySize == 0)
             {
                 return;
             }
-            var mainWindow = Application.Current.MainWindow as MainWindow;
+            // var mainWindow = Application.Current.MainWindow as MainWindow;
+            var mainWindow = ParentWindow as MainWindow;
             if (mainWindow is null || mainWindow.MemoryDisplayer is null)
             {
                 return;
@@ -78,7 +99,7 @@ namespace GUIEntrance
             double height = mainWindow.MemoryDisplayer.ActualHeight;
 
             double rate = width / memorySize;
-            var allocatedList = memoryManager.GetAllocatedMemories();
+            var allocatedList = MemoryManager.GetAllocatedMemories();
             var rectList = new LinkedList<Rectangle>();
 
             nuint lastPaintAddress = startAddress;
@@ -124,6 +145,10 @@ namespace GUIEntrance
         {
             try
             {
+                if (MemoryManager is null)
+                {
+                    throw new Exception("Unexpected exception!");
+                }
                 int size = 0;
                 try
                 {
@@ -140,7 +165,7 @@ namespace GUIEntrance
                     return;
                 }
 
-                var addr = memoryManager.AllocateMemory(size);
+                var addr = MemoryManager.AllocateMemory(size);
                 if (addr is not null)
                 {
                     var info = string.Format($"Alloc success! Start address: {addr.Value}; Size: { size }");
@@ -164,6 +189,10 @@ namespace GUIEntrance
         {
             try
             {
+                if (MemoryManager is null)
+                {
+                    throw new Exception("Unexpected exception!");
+                }
                 nuint startAddress = 0;
                 try
                 {
@@ -180,7 +209,7 @@ namespace GUIEntrance
                     return;
                 }
 
-                if (memoryManager.FreeMemory(startAddress))
+                if (MemoryManager.FreeMemory(startAddress))
                 {
                     var info = string.Format($"Successfully free memory at: { startAddress }!");
                     LogInfo = info;
@@ -214,25 +243,12 @@ namespace GUIEntrance
         }
         private const int MAX_LOGS_LINES = 1024;
         private LinkedList<string> logs = new();
+        public Window? ParentWindow = null;
 
         public MainWindowViewModel()
         {
             AllocMemory = new RelayCommand(AllocMemoryAction);
             FreeMemory = new RelayCommand(FreeMemoryAction);
-
-            var initialization = new InitializeMemoryWindow();
-            initialization.ShowDialog();
-            if (initialization.MemoryManager is null)
-            {
-                Application.Current.Shutdown();
-
-                // Unreachable, just to disable warnings.
-
-                throw new Exception("Unreachable code!");
-            }
-            memoryManager = initialization.MemoryManager;
-            LogInfo = String.Format($"Successfully created memory manager!\n- Start address: {memoryManager.StartAddress}\n- Size: {memoryManager.MemorySize}");
-            RePaintMemoryDisplayer();
         }
     }
 }

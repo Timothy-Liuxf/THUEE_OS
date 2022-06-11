@@ -23,6 +23,22 @@ namespace GUIEntrance
         public MainWindow()
         {
             InitializeComponent();
+
+            var dataContext = DataContext as MainWindowViewModel;
+            if (dataContext is null)
+            {
+                return;
+            }
+            dataContext.ParentWindow = this;
+
+            var initialization = new InitializeMemoryWindow();
+            initialization.ShowDialog();
+            if (initialization.MemoryManager is null)
+            {
+                Application.Current.Shutdown();
+                return;
+            }
+            dataContext.MemoryManager = initialization.MemoryManager;
         }
 
         public ItemsControl MemoryDisplayer => memoryDisplayer;
