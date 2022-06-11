@@ -61,7 +61,7 @@ namespace GUIEntrance
                     return;
                 }
                 memoryManager = value;
-                LogInfo = String.Format($"Successfully created memory manager!\n- Start address: {value.StartAddress}\n- Size: {value.MemorySize}");
+                LogInfo = String.Format($"\nSuccessfully created memory manager!\n- Start address: {value.StartAddress}\n- Size: {value.MemorySize}\n");
                 RePaintMemoryDisplayer();
             }
         }

@@ -31,17 +31,31 @@ namespace GUIEntrance
             }
             dataContext.ParentWindow = this;
 
+            if (!CreateNewMemoryManager())
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        public ItemsControl MemoryDisplayer => memoryDisplayer;
+
+        private bool CreateNewMemoryManager()
+        {
+            var dataContext = DataContext as MainWindowViewModel;
+            if (dataContext is null)
+            {
+                return false;
+            }
+
             var initialization = new InitializeMemoryWindow();
             initialization.ShowDialog();
             if (initialization.MemoryManager is null)
             {
-                Application.Current.Shutdown();
-                return;
+                return false;
             }
             dataContext.MemoryManager = initialization.MemoryManager;
+            return true;
         }
-
-        public ItemsControl MemoryDisplayer => memoryDisplayer;
 
         private void logTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -58,6 +72,16 @@ namespace GUIEntrance
                 return;
             }
             dataContext.RePaintMemoryDisplayer();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewMemoryManager();
         }
     }
 }
