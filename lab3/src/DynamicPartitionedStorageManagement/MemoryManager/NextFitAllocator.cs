@@ -89,7 +89,7 @@
             else
             {
                 freeBlocks.Add(memoryBlock);
-                lastAllocatePosition = lastAllocatePosition ?? freeBlocks.First;
+                lastAllocatePosition ??= freeBlocks.First;
             }
         }
 
