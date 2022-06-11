@@ -75,6 +75,8 @@ main()
         std::cout << "Available vector: \n";
         outputVec(available);
         endl(std::cout);
+
+        std::cout << "==========\n" << std::endl;
     }
     return 0;
 }
