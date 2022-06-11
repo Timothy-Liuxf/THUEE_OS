@@ -49,6 +49,20 @@
         "ctime": "cpp",
         "mutex": "cpp",
         "thread": "cpp",
-        "forward_list": "cpp"
+        "forward_list": "cpp",
+        "deque": "cpp",
+        "unordered_map": "cpp",
+        "system_error": "cpp",
+        "__bit_reference": "cpp",
+        "__mutex_base": "cpp",
+        "__split_buffer": "cpp",
+        "__threading_support": "cpp",
+        "queue": "cpp",
+        "list": "cpp",
+        "ranges": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "filesystem": "cpp",
+        "map": "cpp"
     }
 }
