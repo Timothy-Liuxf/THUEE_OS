@@ -1,4 +1,13 @@
-﻿namespace Utils
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
+namespace Utils
 {
     public class SortedLinkedList<T>
         : ICollection<T>, IEnumerable<T>, System.Collections.IEnumerable, IReadOnlyCollection<T>, System.Collections.ICollection

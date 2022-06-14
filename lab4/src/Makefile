@@ -1,3 +1,13 @@
+################################################################################
+#
+#  This file is part of the THUEE_OS project.
+#
+#  Copyright (C) 2022 Timothy-LiuXuefeng
+#
+#  MIT License
+#
+################################################################################
+
 export LDLIBS +=
 export CXXFLAGS ?= -O2 -Wall -Wpedantic -Wextra -std=c++11
 export DEPS_DIR = deps

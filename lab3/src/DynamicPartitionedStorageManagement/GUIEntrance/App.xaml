@@ -1,4 +1,14 @@
-﻿<Application x:Class="GUIEntrance.App"
+﻿<!-- 
+
+  This file is part of the THUEE_OS project.
+
+  Copyright (C) 2022 Timothy-LiuXuefeng
+
+  MIT License
+
+-->
+
+<Application x:Class="GUIEntrance.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GUIEntrance"

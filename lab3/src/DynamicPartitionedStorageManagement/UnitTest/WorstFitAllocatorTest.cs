@@ -1,4 +1,13 @@
-﻿namespace UnitTest
+﻿////////////////////////////////////////////////////////////////////////////////
+//
+// This file is part of the THUEE_OS project.
+//
+// Copyright (C) 2022 Timothy-LiuXuefeng
+//
+// MIT License
+//
+
+namespace UnitTest
 {
     [TestClass]
     public class WorstFitAllocatorTest
