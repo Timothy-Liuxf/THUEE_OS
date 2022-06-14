@@ -7,7 +7,7 @@
 
 Solution to 'Bank Teller Service Problem' on Linux x86_64.
 
-## How to use
+## How to Use
 
 ### Prerequisites
 
