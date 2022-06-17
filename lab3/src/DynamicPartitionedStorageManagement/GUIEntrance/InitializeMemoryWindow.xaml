@@ -15,17 +15,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIEntrance"
         mc:Ignorable="d"
-        Title="InitializeMemoryWindow" MinHeight="250" MinWidth="800" Height="250" Width="800"
+        Title="Initialize Memory Manager" MinHeight="250" MinWidth="800" Height="250" Width="800"
         Closing="Window_Closing"
         >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <DockPanel Grid.Row="0" Grid.Column="0" Margin="20" Grid.ColumnSpan="1" LastChildFill="True">
@@ -51,6 +51,6 @@
 
         
 
-        <Button x:Name="OK" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="20" Click="OK_Click">OK</Button>
+        <Button x:Name="OK" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" Margin="20" Click="OK_Click" IsDefault="True">OK</Button>
     </Grid>
 </Window>

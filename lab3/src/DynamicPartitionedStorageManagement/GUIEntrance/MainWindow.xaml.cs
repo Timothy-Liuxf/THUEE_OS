@@ -92,5 +92,10 @@ namespace GUIEntrance
         {
             CreateNewMemoryManager();
         }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            new AboutDialog() { Owner = this }.ShowDialog();
+        }
     }
 }

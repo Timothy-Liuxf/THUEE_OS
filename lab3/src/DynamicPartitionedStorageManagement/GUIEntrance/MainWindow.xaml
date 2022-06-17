@@ -15,36 +15,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GUIEntrance"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1200" MinHeight="450" MinWidth="900"
+        Title="Dynamic Partitioned Storage Management" Height="500" Width="1200" MinHeight="450" MinWidth="900"
         SizeChanged="Window_SizeChanged">
 
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <local:MainWindowViewModel />
     </Window.DataContext>
 
     <Window.CommandBindings>
-        <CommandBinding Command="New"  Executed="New_Click"/>
-        <CommandBinding Command="Close" Executed="Exit_Click"/>
+        <CommandBinding Command="New"  Executed="New_Click" />
+        <CommandBinding Command="Close" Executed="Exit_Click" />
     </Window.CommandBindings>
 
     <Window.InputBindings>
-        <KeyBinding Key="N" Modifiers="Ctrl"  Command="New"/>
-        <KeyBinding Key="F4" Modifiers="Alt"  Command="Close"/>
+        <KeyBinding Key="N" Modifiers="Ctrl"  Command="New" />
+        <KeyBinding Key="F4" Modifiers="Alt"  Command="Close" />
     </Window.InputBindings>
 
     <DockPanel LastChildFill="True">
-        <Menu Height="23" DockPanel.Dock="Top">
-            <MenuItem Header="File" Height="23">
+        <Menu Height="Auto" DockPanel.Dock="Top">
+            <MenuItem Header="_File" Height="23">
                 <MenuItem Header="New" InputGestureText="Ctrl+N" Command="New" />
                 <Separator />
                 <MenuItem Header="Exit" InputGestureText="Alt+F4" Command="Close" />
             </MenuItem>
+            <MenuItem Header="_About" Height="23" Click="About_Click"></MenuItem>
         </Menu>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -66,7 +67,7 @@
                 <TextBox Margin="10" Width="Auto" VerticalContentAlignment="Center" Text="{Binding SizeToAllocInput, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"></TextBox>
             </DockPanel>
 
-            <Button Grid.Row="1" Grid.Column="1" Margin="20" Command="{ Binding AllocMemory, Mode=OneTime}">Allocate</Button>
+            <Button Grid.Row="1" Grid.Column="1" Margin="20" Command="{Binding AllocMemory, Mode=OneTime}">Allocate</Button>
 
             <DockPanel Grid.Row="2" Grid.Column="0" Margin="20" LastChildFill="True">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" DockPanel.Dock="Left">Start Address</TextBlock>
@@ -80,7 +81,7 @@
                  TextAlignment="Left" AcceptsReturn="True" IsReadOnly="True"
                  VerticalScrollBarVisibility="Auto"
                  Text="{Binding LogInfo, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                 TextChanged="logTextBox_TextChanged"/>
+                 TextChanged="logTextBox_TextChanged" />
         </Grid>
     </DockPanel>
 </Window>

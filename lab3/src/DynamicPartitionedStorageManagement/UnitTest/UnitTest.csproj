@@ -6,6 +6,13 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+      <Copyright>Copyright (C) 2022</Copyright>
+      <VersionPrefix>1.0.0</VersionPrefix>
+      <FileVersion>1.0.0.0</FileVersion>
+      <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      <Authors>Timothy Liu</Authors>
+      <Company>$(Authors)</Company>
+      <Description>Unit test of DynamicPartitionedStorageManagement</Description>
   </PropertyGroup>
 
   <ItemGroup>

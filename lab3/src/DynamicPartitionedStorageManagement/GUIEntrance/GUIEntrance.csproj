@@ -5,10 +5,41 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <SignAssembly>False</SignAssembly>
+    <Copyright>Copyright (C) 2022</Copyright>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <PackageProjectUrl>https://github.com/Timothy-LiuXuefeng/THUEE_OS/tree/master/lab3</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Timothy-LiuXuefeng/THUEE_OS/tree/master/lab3</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+      <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Authors>Timothy Liu</Authors>
+    <Company>$(Authors)</Company>
+    <Product>DynamicPartitionedStorageManagement</Product>
+    <Description>Dynamic partitioned storage management visualization, with arrangement strategies such as first fit, next fit, best fit and worst fit.</Description>
+    <PackageReleaseNotes>Dynamic partitioned storage management visualization, with arrangement strategies such as first fit, next fit, best fit and worst fit.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MemoryManager\MemoryManager.csproj" />
+    <None Include="../../../README.md">
+      <Pack>True</Pack>
+      <PackagePath>/</PackagePath>
+    </None>
+    <None Include="../../../README.zh-Hans.md">
+        <Pack>True</Pack>
+        <PackagePath>/</PackagePath>
+    </None>
+    <None Include="../../../../LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>/</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../MemoryManager/MemoryManager.csproj" />
   </ItemGroup>
 
 </Project>
